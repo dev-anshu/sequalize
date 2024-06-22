@@ -1,14 +1,12 @@
 const express = require('express');
 
 const app = express();
-// const routes = require('./routes');
+const routes = require('./routes');
 
 
 module.exports = (config) => {
   const log = config.log();
 
-  // const todoService = new TodoService();
-  // const userService = new UserService();
 
   // Add a request logging middleware in development mode
   if (app.get('env') === 'development') {
@@ -18,7 +16,7 @@ module.exports = (config) => {
     });
   }
   
-  // app.use('/', routes({todoService, userService}));
+  app.use('/', routes(config));
   
   // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {
