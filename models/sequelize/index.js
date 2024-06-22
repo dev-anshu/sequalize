@@ -11,7 +11,14 @@ module.exports = (sequelize) => {
         },
         firstName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            get() {
+                const rawValue = this.getDataValue('firstName');
+                return rawValue ? rawValue.toUpperCase() : null;
+            },
+            set(value) {
+                this.setDataValue('firstName', `${value} SET`);
+            }
         },
         lastName: {
             type: DataTypes.STRING,
@@ -20,6 +27,13 @@ module.exports = (sequelize) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            set(value) {
+                this.setDataValue('password', `hashed(${value})`);
+            }
         }
     }, {
         // freezeTableName: true
